@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Patient List</h1>
+        <div class="controls">
+            <a href="{{ url_for('add_patient') }}" class="button">Add New Patient</a>
+            <a href="{{ url_for('export_excel') }}" class="button">Export to Excel</a>
+            <input type="text" id="patientSearch" placeholder="Search by patient name...">
+        </div>
+        <table id="patientTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Age (as on last session)</th>
+                    <th>Primary Diagnosis</th>
+                    <th>Last Session Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.gender or 'N/A' }}</td>
+                    <td>
+                        {% if patient.dob and patient.last_session_date %}
+                            {% set age = (patient.last_session_date.year - patient.dob.year) - ((patient.last_session_date.month, patient.last_session_date.day) < (patient.dob.month, patient.dob.day)) %}
+                            {{ age }}
+                        {% else %} N/A {% endif %}
+                    </td>
+                    <td>
+                        {% set last_session = (sessions | selectattr('patient_id', 'equalto', patient.id) | selectattr('date', 'equalto', patient.last_session_date) | list | first) %}
+                        {{ last_session.primary_diagnosis if last_session else 'N/A' }}
+                    </td>
+                    <td>{{ patient.last_session_date or 'N/A' }}</td>
+                    <td><a href="{{ url_for('add_session', patient_id=patient.id) }}" class="button">Add Session</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.getElementById('patientSearch').addEventListener('keyup', function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#patientTable tbody tr');
+            rows.forEach(row => {
+                const name = row.cells[0].textContent.toLowerCase();
+                row.style.display = name.includes(filter) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

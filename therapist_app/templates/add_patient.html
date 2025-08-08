@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Patient</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add New Patient</h1>
+        <form method="POST">
+            <label for="name">Name*:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob">
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="">Select...</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="contact">Contact Number:</label>
+            <input type="text" id="contact" name="contact">
+
+            <label for="initial_note">Initial Note:</label>
+            <textarea id="initial_note" name="initial_note" rows="3"></textarea>
+
+            <label for="referred_by">Referred By:</label>
+            <input type="text" id="referred_by" name="referred_by">
+
+            <button type="submit">Submit</button>
+            <a href="{{ url_for('index') }}" class="button">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

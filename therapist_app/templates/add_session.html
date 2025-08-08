@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Session for {{ patient.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add New Session for {{ patient.name }}</h1>
+        <form method="POST">
+            <label for="primary_diagnosis">Primary Diagnosis*:</label>
+            <textarea id="primary_diagnosis" name="primary_diagnosis" rows="3" required></textarea>
+
+            <label for="secondary_diagnosis">Secondary Diagnosis:</label>
+            <textarea id="secondary_diagnosis" name="secondary_diagnosis" rows="3"></textarea>
+
+            <label for="tertiary_diagnosis">Tertiary Diagnosis:</label>
+            <textarea id="tertiary_diagnosis" name="tertiary_diagnosis" rows="3"></textarea>
+
+            <label for="assessment_done">Assessment Done:</label>
+            <textarea id="assessment_done" name="assessment_done" rows="3"></textarea>
+
+            <label for="therapy_given">Therapy Given:</label>
+            <textarea id="therapy_given" name="therapy_given" rows="3"></textarea>
+
+            <label for="progress_note">Progress Note:</label>
+            <textarea id="progress_note" name="progress_note" rows="3"></textarea>
+
+            <button type="submit">Submit</button>
+            <a href="{{ url_for('index') }}" class="button">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
